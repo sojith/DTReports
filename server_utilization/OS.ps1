@@ -1,0 +1,5 @@
+$os_response = Invoke-WebRequest -Method GET -ContentType “application/json” -Uri “https://xyz12345.live.dynatrace.com/api/v2/entities?pageSize=500&entitySelector=type%28%22HOST%22%29%2CmzName%28%22mz-az-uk%22%29&from=2023-05-01T00%3A00%3A00&to=2023-05-31T23%3A59%3A59&fields=properties.osType” -Headers @{"Authorization"="Api-Token yyyyyy.abcd12345"}
+echo $os_response.Content | ConvertFrom-Json | ConvertTo-Json > M:\DT\serverUtilization\inputFiles\os\os.json
+
+$metric_response = Invoke-WebRequest -Method GET -ContentType “application/json” -Uri “https://xyz12345.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin%3Ahost.cpu.usage%3A%28min%2Cmax%2Cavg%29%3Anames%2C%20builtin%3Ahost.mem.usage%3A%28min%2Cmax%2Cavg%29%3Anames%2C%20builtin%3Ahost.disk.usedPct%3A%28min%2Cmax%2Cavg%29%3Anames&resolution=1M&from=2023-05-01T00%3A00%3A00&to=2023-05-31T23%3A59%3A59&entitySelector=type%28%22HOST%22%29%2CmzName%28%22mz-az-uk%22%29" -Headers @{"Authorization"="Api-Token yyyyyy.abcd12345"}
+echo $metric_response.Content > M:\DT\serverUtilization\inputFiles\metrics\metrics.json
